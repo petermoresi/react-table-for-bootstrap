@@ -30,7 +30,7 @@ export default class BootstrapTable extends Component {
         <thead>
           <tr>
             { this.props.selectable ? <th></th> : null }
-            { this.props.headers.map( N => <th>{ N }</th> ) }
+            { this.props.headers.map( (N, I) => <th key={I}>{ N }</th> ) }
           </tr>
         </thead>
         <tbody>
@@ -43,10 +43,10 @@ export default class BootstrapTable extends Component {
             mode = isSelected ? 1 : isSuccess ? 2 : isDanger ? 3 : isWarning ? 4 : 0;
 
             return (
-              <tr onClick={ this.handleRowClicked.bind(this) }
+              <tr key={rowIndex} onClick={ this.handleRowClicked.bind(this) }
                   className={ CHOOSE( mode, 'active', 'success', 'danger', 'warning', '' ) }>
                 { this.props.selectable ? <td><input type="checkbox" checked={ isSelected }/></td> : null }
-                { this.props.columnRenderers.map((col) => <td>{ typeof col === "function" ? col(n) : n[col] }</td>)}
+                { this.props.columnRenderers.map((col, i) => <td key={i + '-' + n[this.props.keyField]}>{ typeof col === "function" ? col(n) : n[col] }</td>)}
               </tr>
             )}
           )}
@@ -57,6 +57,7 @@ export default class BootstrapTable extends Component {
 }
 
 BootstrapTable.propTypes = {
+  keyField: PropTypes.string,
   selectable: PropTypes.bool,
   showBorder: PropTypes.bool,
   enableHover: PropTypes.bool,
@@ -73,6 +74,7 @@ BootstrapTable.propTypes = {
 }
 
 BootstrapTable.defaultProps = {
+  keyField: "id",
   selectable: false,
   showBorder: false,
   enableHover: true,
