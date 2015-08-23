@@ -33,3 +33,5 @@
                       'width': row.width + '%', height: '3em'
                     }}></span>]
                   } />
+
+See demo directory for more complex example.
