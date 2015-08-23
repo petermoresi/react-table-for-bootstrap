@@ -669,4 +669,4 @@ export default [
         "name": "Yellow Orange",
         "rgb": "(255, 174, 66)"
     }
-].map((n, i) => { n.id = i; n.width = rand50To100(); return n; })
+].map((n, i) => { n.id = i+1; n.width = rand50To100(); return n; })

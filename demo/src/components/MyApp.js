@@ -25,27 +25,9 @@ export default class MyApp extends React.Component {
     };
   }
 
-  componentDidMount() {
-    setInterval( function() {
-      this.setState( { counter: (this.state.counter+1) } );
-    }.bind(this), 1000);
-  }
-
-  handleRandomize() {
-    var rows = this.state.rows.map((n) => {
-      n.width = between(25, 100);
-      return n;
-    }.bind(this));
-    this.setState({ rows: rows, startRow: between(0, 100) });
-  }
-
   render() {
     return (
       <div>
-        <button onClick={this.handleRandomize.bind(this)}
-          className="btn btn-primary">
-          Randomize
-        </button>
 
         <TableConfig
           rows={this.state.rows}
@@ -56,17 +38,23 @@ export default class MyApp extends React.Component {
           warningRows={this.state.warningRows}
           selectedRows={this.state.selectedRows}
           updateStartRow={ (value) => { this.setState({ startRow: +value }) }.bind(this) }
-          updateNumberOfRows={ (value) => { this.setState({ numberOfRows: +value }) }.bind(this) } />
+          updateNumberOfRows={ (value) => { this.setState({ numberOfRows: +value }) }.bind(this) }
+          updateSelectedRows={ (value) => { this.setState({ selectedRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) }
+          updateDangerRows={ (value) => { this.setState({ dangerRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) }
+          updateWarningRows={ (value) => { this.setState({ warningRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) }
+          updateSuccessRows={ (value) => { this.setState({ successRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) } />
 
         <BootstrapTable
-          getRowAt={ (rowIndex) => this.state.rows[rowIndex] }
-          headers={['Color', 'Hex Value']}
+          headers={['id', 'Color', 'Hex Value']}
           startRow={this.state.startRow}
+          numberOfRows={this.state.numberOfRows}
           successRows={this.state.successRows}
           dangerRows={this.state.dangerRows}
           warningRows={this.state.warningRows}
           selectedRows={this.state.selectedRows}
+          getRowAt={ (rowIndex) => this.state.rows[rowIndex] }
           columnRenderers={[
+            (row) => row.id,
             (row) => `${row.name} (${row.hex})`,
             (row) => <span style={{
               paddingTop: 10,
