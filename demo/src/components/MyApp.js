@@ -30,7 +30,7 @@ export default class MyApp extends React.Component {
       <div>
 
         <TableConfig
-          rows={this.state.rows}
+          getTableLength={() => this.state.rows.length }
           startRow={this.state.startRow}
           numberOfRows={this.state.numberOfRows}
           successRows={this.state.successRows}
