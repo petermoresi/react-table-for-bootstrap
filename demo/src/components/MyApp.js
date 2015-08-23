@@ -45,8 +45,11 @@ export default class MyApp extends React.Component {
           updateSuccessRows={ (value) => { this.setState({ successRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) } />
 
         <BootstrapTable
-          headers={['id', 'Color', 'Hex Value']}
+          headers={['#', 'Color', 'Hex Value']}
           startRow={this.state.startRow}
+          enableHover={true}
+          enableStriped={false}
+          showBorder={true}
           numberOfRows={this.state.numberOfRows}
           successRows={this.state.successRows}
           dangerRows={this.state.dangerRows}
