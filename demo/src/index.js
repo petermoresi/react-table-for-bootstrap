@@ -7,6 +7,9 @@ import React from 'react';
 import MyApp from './components/MyApp.js'
 
 React.render(
-  <MyApp />,
+  <div className="container main">
+    <h1>Crayola Colors</h1>
+    <MyApp />
+  </div>,
   document.body
 );

@@ -17,7 +17,9 @@ export default class BootstrapTable extends Component {
 
   render() {
     return (
-      <table className={'table' + (this.props.showBorder ? ' table-bordered' : '') + (this.props.enableHover ? ' table-hover' : '') }>
+      <table className={'table' + (this.props.showBorder ? ' table-bordered' : '') +
+        (this.props.enabledStriped ? ' table-striped' : '') +
+        (this.props.enableHover ? ' table-hover' : '') }>
         <thead>
           <tr>
             { this.props.selectable ? <th></th> : null }
@@ -39,7 +41,7 @@ export default class BootstrapTable extends Component {
 
             return (
               <tr key={rowIndex} onClick={ this.handleRowClicked.bind(this, rowIndex) }
-                  className={ CHOOSE( mode, 'active', 'success', 'danger', 'warning', '' ) }>
+                className={ CHOOSE( mode, 'active', 'success', 'danger', 'warning', '' ) }>
                 { this.props.selectable ? <td><input type="checkbox" checked={ isSelected }/></td> : null }
                 { this.props.columnRenderers.map((col, i) => <td key={i + '-' + row[this.props.keyField]}>{ typeof col === "function" ? col(row) : row[col] }</td>)}
               </tr>
@@ -56,6 +58,7 @@ BootstrapTable.propTypes = {
   selectable: PropTypes.bool,
   showBorder: PropTypes.bool,
   enableHover: PropTypes.bool,
+  enabledStriped: PropTypes.bool,
   startRow: PropTypes.number,
   numberOfRows: PropTypes.number,
   rows: PropTypes.array,
@@ -73,6 +76,7 @@ BootstrapTable.defaultProps = {
   selectable: false,
   showBorder: false,
   enableHover: true,
+  enableStriped: false,
   startRow: 1,
   numberOfRows: 10,
   selectedRows: [],

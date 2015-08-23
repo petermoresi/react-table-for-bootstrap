@@ -39,14 +39,14 @@ export default class TableConfig extends React.Component {
         <div className="col-sm-12 col-md-2">
           <div className="form-group">
             <label className="control-label" htmlFor="focusedInput">Start Row</label>
-            <input className="form-control" min="1" max={ this.props.rows.length + 1 } type="number"
+            <input type="number" className="form-control" min="1" max={ this.props.getTableLength() + 1 }
               onChange={ this.handleStartRowChanged.bind(this) } value={ this.props.startRow }/>
           </div>
         </div>
         <div className="col-sm-12 col-md-2">
           <div className="form-group">
             <label className="control-label" htmlFor="focusedInput">Number of Rows</label>
-            <input className="form-control" min="1" max={ this.props.rows.length + 1 }
+            <input className="form-control" min="1" max={ this.props.getTableLength() + 1 }
               type="number" onChange={ this.handleNumberOfRowsChanged.bind(this) }
               value={ this.props.numberOfRows }/>
           </div>
@@ -96,6 +96,7 @@ TableConfig.propTypes = {
   successRows: PropTypes.array,
   dangerRows: PropTypes.array,
   warningRows: PropTypes.array,
+  getTableLength: PropTypes.func,
   updateSuccessRows: PropTypes.func,
   updateDangerRows: PropTypes.func,
   updateWarningRows: PropTypes.func,
