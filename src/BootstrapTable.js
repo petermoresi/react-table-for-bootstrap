@@ -3,6 +3,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import CHOOSE from 'formula-choose';
+import range from 'lodash.range';
 
 export default class BootstrapTable extends Component {
 
@@ -10,18 +11,8 @@ export default class BootstrapTable extends Component {
     super();
   }
 
-  handleRowClicked(event) {
-    var rowIndex = +event.currentTarget.rowIndex + this.props.startRow;
-    var index = this.props.selectedRows.indexOf(rowIndex-1);
-    var rows = this.props.selectedRows;
-    if (index === -1) {
-      rows.push(rowIndex-1);
-    } else {
-      rows.splice(index, 1);
-    }
-
-    this.props.updateSelectedRows(rows)
-
+  handleRowClicked(rowIndex) {
+    this.props.updateSelectedRows(rowIndex)
   }
 
   render() {
@@ -34,8 +25,12 @@ export default class BootstrapTable extends Component {
           </tr>
         </thead>
         <tbody>
-          { this.props.rows.slice(this.props.startRow-1, this.props.startRow + this.props.numberOfRows).map((n, rowIndex) => {
-            rowIndex++;
+          { range(this.props.startRow, this.props.startRow + this.props.numberOfRows).map((rowIndex) => {
+
+            let row = this.props.getRowAt(rowIndex-1);
+
+            if (!row) { return null; }
+
             let isSelected = this.props.selectedRows.indexOf(rowIndex) > -1,
             isSuccess = this.props.successRows.indexOf(rowIndex) > -1,
             isDanger = this.props.dangerRows.indexOf(rowIndex) > -1,
@@ -43,10 +38,10 @@ export default class BootstrapTable extends Component {
             mode = isSelected ? 1 : isSuccess ? 2 : isDanger ? 3 : isWarning ? 4 : 0;
 
             return (
-              <tr key={rowIndex} onClick={ this.handleRowClicked.bind(this) }
+              <tr key={rowIndex} onClick={ this.handleRowClicked.bind(this, rowIndex) }
                   className={ CHOOSE( mode, 'active', 'success', 'danger', 'warning', '' ) }>
                 { this.props.selectable ? <td><input type="checkbox" checked={ isSelected }/></td> : null }
-                { this.props.columnRenderers.map((col, i) => <td key={i + '-' + n[this.props.keyField]}>{ typeof col === "function" ? col(n) : n[col] }</td>)}
+                { this.props.columnRenderers.map((col, i) => <td key={i + '-' + row[this.props.keyField]}>{ typeof col === "function" ? col(row) : row[col] }</td>)}
               </tr>
             )}
           )}

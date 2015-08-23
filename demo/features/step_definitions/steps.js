@@ -40,7 +40,7 @@ var myStepDefinitionsWrapper = function () {
     //console.log( "Render at: " + new Date() );
     var output = app.render();
     var html = React.renderToStaticMarkup( output );
-    //console.log(html);
+    console.log(html);
     assert( html == text, 'Does not match');
     callback();
   });
