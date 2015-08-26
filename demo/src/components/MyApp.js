@@ -3,7 +3,8 @@
 */
 
 import React from 'react';
-import {BootstrapTable, TableConfig} from 'react-table-for-bootstrap';
+import {Table, Column, TableConfig} from 'react-table-for-bootstrap';
+
 import Colors from './CrayolaColors';
 
 function between(min, max) {
@@ -44,7 +45,7 @@ export default class MyApp extends React.Component {
           updateWarningRows={ (value) => { this.setState({ warningRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) }
           updateSuccessRows={ (value) => { this.setState({ successRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) } />
 
-        <BootstrapTable
+        <Table
           headers={['#', 'Color', 'Hex Value']}
           startRow={this.state.startRow}
           enableHover={true}
@@ -79,6 +80,30 @@ export default class MyApp extends React.Component {
             }
           }
           />
+
+        <Table
+            headers={['#', 'Color', 'Hex Value']}
+            startRow={this.state.startRow}
+            enableHover={true}
+            enableStriped={false}
+            showBorder={true}
+            numberOfRows={this.state.numberOfRows}
+            successRows={this.state.successRows}
+            dangerRows={this.state.dangerRows}
+            warningRows={this.state.warningRows}
+            selectedRows={this.state.selectedRows}
+            getRowAt={ (rowIndex) => this.state.rows[rowIndex] }
+            columnRenderers={[]}>
+              <Column column="id" />
+              <Column cellRenderer={(row) => `${row.name} (${row.hex})`}/>
+              <Column cellRenderer={(row) => <span style={{
+                paddingTop: 10,
+                display: 'block',
+                backgroundColor: row.hex,
+                width: row.width + '%', height: '3em'
+              }}></span>}/>
+          </Table>
+
       </div>
     );
   }

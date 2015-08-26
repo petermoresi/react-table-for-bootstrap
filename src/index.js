@@ -1,4 +1,5 @@
 export default {
-  BootstrapTable: require('./BootstrapTable'),
+  Table: require('./BootstrapTable'),
+  Column: require('./BootstrapColumn'),
   TableConfig: require('./TableConfig')
 }

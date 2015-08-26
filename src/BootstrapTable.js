@@ -16,6 +16,15 @@ export default class BootstrapTable extends Component {
   }
 
   render() {
+
+    if(this.props.children) {
+      this.props.columnRenderers = this.props.children.map((n) => {
+        return n.props.cellRenderer || function(row) {
+          return row[n.props.column];
+        };
+      })
+    }
+
     return (
       <table className={'table' + (this.props.showBorder ? ' table-bordered' : '') +
         (this.props.enabledStriped ? ' table-striped' : '') +
@@ -43,7 +52,11 @@ export default class BootstrapTable extends Component {
               <tr key={rowIndex} onClick={ this.handleRowClicked.bind(this, rowIndex) }
                 className={ CHOOSE( mode, 'active', 'success', 'danger', 'warning', '' ) }>
                 { this.props.selectable ? <td><input type="checkbox" checked={ isSelected }/></td> : null }
-                { this.props.columnRenderers.map((col, i) => <td key={i + '-' + row[this.props.keyField]}>{ typeof col === "function" ? col(row) : row[col] }</td>)}
+                { this.props.columnRenderers.map((col, i) =>
+                  <td key={i + '-' + row[this.props.keyField]}>
+                    { typeof col === "function" ? col(row) : row[col] }
+                  </td>)
+                }
               </tr>
             )}
           )}
