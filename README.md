@@ -18,8 +18,8 @@
 
 ## Simple Example
 
-    var BootstrapTable = require('react-table-for-bootstrap').BootstrapTable
-    <Bootstrap.Table
+    var BootstrapTable = require('react-table-for-bootstrap').Table
+    <BootstrapTable
           rows={[{ name: 'ref', hex: '#F00' },
                  { name: 'green', hex: '#0F0' },
                  { name: 'blue', hex: '#00F' }]}
