@@ -1,6 +1,6 @@
 {
   "name": "react-table-for-bootstrap",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "React.js component for bootstrap styled table",
   "main": "lib/index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   "dependencies": {
     "formula-choose": "^1.0.0",
     "lodash.range": "^3.0.1",
-    "react": "~0.13.0"
+    "react": "~0.13.0",
+    "react-partial-table": "^2.0.0"
   }
 }

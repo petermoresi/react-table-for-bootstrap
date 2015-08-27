@@ -2,8 +2,7 @@
 */
 
 import React, { Component, PropTypes } from 'react';
-import CHOOSE from 'formula-choose';
-import range from 'lodash.range';
+import {Table} from 'react-partial-table';
 
 export default class BootstrapTable extends Component {
 
@@ -16,39 +15,33 @@ export default class BootstrapTable extends Component {
   }
 
   render() {
+
     return (
-      <table className={'table' + (this.props.showBorder ? ' table-bordered' : '') +
-        (this.props.enabledStriped ? ' table-striped' : '') +
-        (this.props.enableHover ? ' table-hover' : '') }>
-        <thead>
-          <tr>
-            { this.props.selectable ? <th></th> : null }
-            { this.props.headers.map( (N, I) => <th key={I}>{ N }</th> ) }
-          </tr>
-        </thead>
-        <tbody>
-          { range(this.props.startRow, this.props.startRow + this.props.numberOfRows).map((rowIndex) => {
-
-            let row = this.props.getRowAt(rowIndex-1);
-
-            if (!row) { return null; }
-
+      <Table
+        fixedHeader={this.props.fixedHeader}
+        startRow={this.props.startRow}
+        numberOfRows={this.props.numberOfRows}
+        interval={this.props.interval}
+        getRowAt={ this.props.getRowAt }
+        className={'table' +
+          (this.props.showBorder ? ' table-bordered' : '') +
+          (this.props.enabledStriped ? ' table-striped' : '') +
+          (this.props.enableHover ? ' table-hover' : '')
+        }
+        getRowClassName={
+          (rowIndex) => {
             let isSelected = this.props.selectedRows.indexOf(rowIndex) > -1,
             isSuccess = this.props.successRows.indexOf(rowIndex) > -1,
             isDanger = this.props.dangerRows.indexOf(rowIndex) > -1,
-            isWarning = this.props.warningRows.indexOf(rowIndex) > -1,
-            mode = isSelected ? 1 : isSuccess ? 2 : isDanger ? 3 : isWarning ? 4 : 0;
-
-            return (
-              <tr key={rowIndex} onClick={ this.handleRowClicked.bind(this, rowIndex) }
-                className={ CHOOSE( mode, 'active', 'success', 'danger', 'warning', '' ) }>
-                { this.props.selectable ? <td><input type="checkbox" checked={ isSelected }/></td> : null }
-                { this.props.columnRenderers.map((col, i) => <td key={i + '-' + row[this.props.keyField]}>{ typeof col === "function" ? col(row) : row[col] }</td>)}
-              </tr>
-            )}
-          )}
-        </tbody>
-      </table>
+            isWarning = this.props.warningRows.indexOf(rowIndex) > -1;
+            return (isSelected ? 'active' : isSuccess ? 'success' : isDanger ? 'danger' : isWarning ? 'warning' : '');
+          }.bind(this)
+        }
+        headerRenderers={this.props.headerRenderers}
+        columnRenderers={this.props.columnRenderers}
+        handleRowClick={(rowIndex) => this.props.updateSelectedRows(rowIndex)}>
+        {this.props.children}
+      </Table>
     );
   }
 }
