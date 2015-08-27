@@ -49,8 +49,7 @@ Alternatively, you an use Columns to specify how to render cells.
         dangerRows={this.state.dangerRows}
         warningRows={this.state.warningRows}
         selectedRows={this.state.selectedRows}
-        getRowAt={ (rowIndex) => this.state.rows[rowIndex] }
-        columnRenderers={[]}>
+        getRowAt={ (rowIndex) => this.state.rows[rowIndex] }>
           <Column column="id" />
           <Column cellRenderer={(row) => `${row.name} (${row.hex})`}/>
           <Column cellRenderer={(row) => <span style={{

@@ -46,7 +46,7 @@ export default class MyApp extends React.Component {
           updateSuccessRows={ (value) => { this.setState({ successRows: value.split(',').map((n) => +n > 0 ? +n : '' ) }) }.bind(this) } />
 
         <Table
-          headers={['#', 'Color', 'Hex Value']}
+          headerRenderers={['#', 'Color', 'Hex Value']}
           startRow={this.state.startRow}
           enableHover={true}
           enableStriped={false}
@@ -82,7 +82,7 @@ export default class MyApp extends React.Component {
           />
 
         <Table
-            headers={['#', 'Color', 'Hex Value']}
+            headerRenderers={['#', 'Color', 'Hex Value']}
             startRow={this.state.startRow}
             enableHover={true}
             enableStriped={false}
@@ -92,8 +92,7 @@ export default class MyApp extends React.Component {
             dangerRows={this.state.dangerRows}
             warningRows={this.state.warningRows}
             selectedRows={this.state.selectedRows}
-            getRowAt={ (rowIndex) => this.state.rows[rowIndex] }
-            columnRenderers={[]}>
+            getRowAt={ (rowIndex) => this.state.rows[rowIndex] }>
               <Column column="id" />
               <Column cellRenderer={(row) => `${row.name} (${row.hex})`}/>
               <Column cellRenderer={(row) => <span style={{

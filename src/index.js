@@ -1,5 +1,7 @@
+import {Column} from 'react-partial-table';
+
 export default {
   Table: require('./BootstrapTable'),
-  Column: require('./BootstrapColumn'),
+  Column: Column,
   TableConfig: require('./TableConfig')
 }
